@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PowerMIDI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">PowerMIDI</div>
+    <button id="btnRandom" class="primary">🎲 隨機生成</button>
+    <button id="btnPlay">▶ 播放</button>
+    <span id="pos" class="pos">1.1.1</span>
+    <label>BPM <input id="bpm" type="number" min="40" max="240"></label>
+    <label>小節 <input id="bars" type="number" min="1" max="128"></label>
+    <span id="keyInfo" class="chip"></span>
+    <label title="影響「自動」音色的挑選">配器風格
+      <select id="style">
+        <option value="acoustic">原聲</option>
+        <option value="electronic">電子</option>
+        <option value="lofi">Lo-fi</option>
+        <option value="orchestral">管弦</option>
+      </select>
+    </label>
+    <div class="spacer"></div>
+    <label class="btn">匯入 MIDI<input id="fileImport" type="file" accept=".mid,.midi,audio/midi" hidden></label>
+    <button id="btnExport">匯出 MIDI</button>
+    <label>主音量 <input id="master" type="range" min="-40" max="6" value="0"></label>
+    <span style="color:gray;">claude x William77</span>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <span>音軌</span>
+        <div>
+          <button id="addMelodic">+ 樂器軌</button>
+          <button id="addDrum">+ 鼓組軌</button>
+          <span class="btn select-btn">+ 電音軌<select id="addEdm" title="新增電音樂器軌（依目前調性與和弦自動生成）"></select></span>
+        </div>
+      </div>
+      <div id="trackList"></div>
+    </aside>
+
+    <section class="editor">
+      <div class="editor-bar">
+        <strong id="editTrackName">—</strong>
+        <label>音長
+          <select id="noteLen">
+            <option value="1">1/16</option>
+            <option value="2">1/8</option>
+            <option value="4" selected>1/4</option>
+            <option value="8">1/2</option>
+            <option value="16">1</option>
+          </select>
+        </label>
+        <label>力度 <input id="vel" type="range" min="1" max="127" value="96"><span id="velVal">96</span></label>
+        <span class="group"><button id="zoomOut" title="縮小">−</button><button id="zoomIn" title="放大">＋</button></span>
+        <button id="regenTrack">🎲 重生此軌</button>
+        <button id="clearTrack">清空</button>
+        <span class="hint">點擊新增 · 拖曳移動 · 拖右緣調長 · 右鍵 / Alt+點擊刪除 · Shift 拖曳框選 · 方向鍵微調 · Space 播放 · ⌘Z 復原</span>
+      </div>
+      <div class="roll-wrap">
+        <canvas id="roll" tabindex="0"></canvas>
+        <div id="empty" class="empty">按「🎲 隨機生成」開始</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.28/build/Midi.min.js"></script>
+  <script src="js/instruments.js"></script>
+  <script src="js/generator.js"></script>
+  <script src="js/pianoroll.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
